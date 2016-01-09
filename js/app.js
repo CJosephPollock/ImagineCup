@@ -75,7 +75,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	  	var newUserInfo = {
 	  		'handle':$scope.userObj.handle,
 	  		'avatar':$scope.userObj.avatar,
-            'mood': 'happy'
+            'mood': 'happy',
+            'weather': 'sun'
 	  	};
 
 	  	$scope.users[authData.uid] = newUserInfo;
@@ -188,7 +189,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     }
 }])
 
-.controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseObject', '$stateParams', function($scope, $http, $state, $firebaseObject, $stateParams) {
+.controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseObject', '$stateParams', '$firebaseArray', function($scope, $http, $state, $firebaseObject, $stateParams, $firebaseArray) {
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
     $scope.userObj = $firebaseObject(ref.child('users').child($stateParams.handle));
 
@@ -198,13 +199,19 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         $scope.isCurrentUser = false;
     }
 
+    var posts = ref.child('posts');
+    $scope.posts = $firebaseArray(posts);
+
     $scope.currentTime = Date.now();
 
     $scope.updateMood = function(mood) {
         $scope.userObj.mood = mood;
         $scope.userObj.$save();
-
     } 
+
+    $scope.updateStatus = function() {
+        
+    }
 
 }])
 
