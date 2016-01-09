@@ -10,7 +10,9 @@
 
 <h2 id="connectionLabel">Connections:</h2>
 <div class="connections" ng-repeat="connection in connections | filter: connectionFilter">
-	<span ng-if="!user1" ui-sref="profile({handle: users[connection.user1].handle})">{{users[connection.user1].handle}}</span>
-	<span ng-if="user1" ui-sref="profile({handle: users[connection.user2].handle})">{{users[connection.user2].handle}}</span>
+    <img ng-src="{{users[connection.user1].avatar}}" ng-if="!user1">
+    <img ng-src="{{users[connection.user2].avatar}}" ng-if="user1">
+	<span ng-if="!user1" ui-sref="profile({handle: connection.user1})">{{users[connection.user1].handle}}</span>
+	<span ng-if="user1" ui-sref="profile({handle: connection.user2})">{{users[connection.user2].handle}}</span>
 </div>
 

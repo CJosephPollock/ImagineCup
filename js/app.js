@@ -188,9 +188,10 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 }])
 
 .controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseArray', '$stateParams', function($scope, $http, $state, $firebaseArray, $stateParams) {
-    var ref = new Firebase('https://homeabroad.firebaseio.com/users/' + $stateParams.handle);
+    var url = 'https://homeabroad.firebaseio.com/users/' + $stateParams.handle
+    console.log($stateParams);
+    var ref = new Firebase(url);
 
-    //$scope.userObj = {avatar: "http://stanlemmens.nl/wp/wp-content/uploads/2014/07/bill-gates-wealthiest-person.jpg", handle: "jpollock"};
 	ref.once("value", function(snapshot) {
 		$scope.userObj = snapshot.val();
 		console.log(snapshot.val());
@@ -217,6 +218,10 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 		$scope.people = people;
 	});
 
+    var connections = ref.child('connections');
+    $scope.connections = $firebaseArray(connections);
+
+
     var Auth = $firebaseAuth(ref);
     //Test if already logged in (when page load)
     var authData = Auth.$getAuth(); //get if we're authorized
@@ -226,8 +231,14 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         $scope.changeVerification(true, authData.uid);
     }
 
-	var connections = ref.child('connections');
-	$scope.connections = $firebaseArray(connections);
+    $scope.peopleFilter = function(person) {
+        if(person.$id == $scope.userId) {
+            return false;
+        }
+        return true;
+    }
+
+
 
 	$scope.connect = function(person) {
 		connections.push({
