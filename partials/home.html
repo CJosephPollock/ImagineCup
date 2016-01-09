@@ -1,0 +1,16 @@
+<button type="button" ng-click="logOut()">Log out</button>
+
+
+<img id="profilePic" ng-src="{{users[userId].avatar}}" ui-sref="profile({handle: userId})"></img>
+
+
+<button ui-sref="addNewConnection">Add New Connection</button>
+
+<span>{{users[userId].handle}}</span>
+
+<h2 id="connectionLabel">Connections:</h2>
+<div class="connections" ng-repeat="connection in connections | filter: connectionFilter">
+	<span ng-if="!user1" ui-sref="profile({handle: users[connection.user1].handle})">{{users[connection.user1].handle}}</span>
+	<span ng-if="user1" ui-sref="profile({handle: users[connection.user2].handle})">{{users[connection.user2].handle}}</span>
+</div>
+
