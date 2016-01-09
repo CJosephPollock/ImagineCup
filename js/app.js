@@ -17,7 +17,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
                 controller: 'homeCtrl'
             })
             .state('profile', {
-                url: '/profile/{handle}',
+                url: '/profile/{currentUser}/{handle}',
                 templateUrl: 'partials/profile.html',
                 controller: 'profileCtrl'
             })
@@ -192,6 +192,11 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
     $scope.userObj = $firebaseObject(ref.child('users').child($stateParams.handle));
 
+    if($stateParams.currentUser == 'true') {
+        $scope.isCurrentUser = true;
+    } else {
+        $scope.isCurrentUser = false;
+    }
 
     $scope.currentTime = Date.now();
 
@@ -201,14 +206,6 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 
     } 
 
-
-	// var users = ref.child('users');
-	//  create a $firebaseObject for the users reference and add to scope (as $scope.users) 
-	// $scope.users = $firebaseArray(users);
-
-	// $scope.users.$loaded().then(function(users) {
-	// 	console.log(users);
-	// })
 }])
 
 
