@@ -221,7 +221,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     $scope.formData = {};
     $scope.updateStatus = function() {
         console.log($scope.formData.status);
-        $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.formData.status});
+        $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.formData.status, 'time':Firebase.ServerValue.TIMESTAMP});
         $scope.formData.status = '';
     }
 
