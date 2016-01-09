@@ -74,7 +74,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 
 	  	var newUserInfo = {
 	  		'handle':$scope.userObj.handle,
-	  		'avatar':$scope.userObj.avatar
+	  		'avatar':$scope.userObj.avatar,
+            'mood': 'happy'
 	  	};
 
 	  	$scope.users[authData.uid] = newUserInfo;
@@ -187,16 +188,18 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     }
 }])
 
-.controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseArray', '$stateParams', function($scope, $http, $state, $firebaseArray, $stateParams) {
-    var url = 'https://homeabroad.firebaseio.com/users/' + $stateParams.handle
-    console.log($stateParams);
-    var ref = new Firebase(url);
+.controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseObject', '$stateParams', function($scope, $http, $state, $firebaseObject, $stateParams) {
+    var ref = new Firebase('https://homeabroad.firebaseio.com/');
+    $scope.userObj = $firebaseObject(ref.child('users').child($stateParams.handle));
 
-	ref.once("value", function(snapshot) {
-		$scope.userObj = snapshot.val();
-		console.log(snapshot.val());
-	});
 
+    $scope.currentTime = Date.now();
+
+    $scope.updateMood = function(mood) {
+        $scope.userObj.mood = mood;
+        $scope.userObj.$save();
+
+    } 
 
 
 	// var users = ref.child('users');
@@ -251,11 +254,29 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	//if the currently signed in account is one of those users, display the OTHER user on their home page.  
 	//to get the mutual approval, have a variable titled "approved"
 
-
-
-
-
 }])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

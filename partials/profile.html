@@ -1,3 +1,18 @@
 {{userObj.handle}}
 
 <img ng-src="{{userObj.avatar}}">
+
+<!-- Current time -->
+<p>{{currentTime | date:"MM/dd/yyyy 'at' h:mma"}}</p>
+
+
+<!-- Mood status div -->
+<a ng-click="updateMood('smile')"><i class="fa fa-smile-o"></i></a>
+<a ng-click="updateMood('meh')"><i class="fa fa-meh-o"></i></a>
+<a ng-click="updateMood('frown')"><i class="fa fa-frown-o"></i></a>
+
+
+<!-- News feed -->
+
+<!-- Days until they come home -->
+

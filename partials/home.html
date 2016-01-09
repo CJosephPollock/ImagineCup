@@ -14,5 +14,7 @@
     <img ng-src="{{users[connection.user2].avatar}}" ng-if="user1">
 	<span ng-if="!user1" ui-sref="profile({handle: connection.user1})">{{users[connection.user1].handle}}</span>
 	<span ng-if="user1" ui-sref="profile({handle: connection.user2})">{{users[connection.user2].handle}}</span>
+    <i ng-if="!user1" class="fa fa-{{users[connection.user1].mood}}-o"></i>
+    <i ng-if="user1" class="fa fa-{{users[connection.user2].mood}}-o"></i>
 </div>
 
