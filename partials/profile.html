@@ -1,3 +1,4 @@
+<div id="profileDiv">
 {{userObj.handle}}
 
 <img ng-src="{{userObj.avatar}}">
@@ -7,30 +8,28 @@
 
 <div ng-if="isCurrentUser">
     <!-- Mood status div -->
-    <a ng-click="updateMood('smile')"><i class="fa fa-smile-o"></i></a>
-    <a ng-click="updateMood('meh')"><i class="fa fa-meh-o"></i></a>
-    <a ng-click="updateMood('frown')"><i class="fa fa-frown-o"></i></a>
+    <a ng-click="updateMood('smile')" ng-class="{selectedMood : moodSelected('smile')}"><i class="fa fa-smile-o"></i></a>
+    <a ng-click="updateMood('meh')" ng-class="{selectedMood : moodSelected('meh')}"><i class="fa fa-meh-o"></i></a>
+    <a ng-click="updateMood('frown')" ng-class="{selectedMood : moodSelected('frown')}"><i class="fa fa-frown-o"></i></a>
 
-
-    <i class="fa fa-sun-o"></i>
-<i class="fa fa-cloud"></i>
-<i class="fa fa-tint"></i>
+    <a ng-click="updateWeather('sun-o')"><i class="fa fa-sun-o"></i></a>
+    <a ng-click="updateWeather('cloud')"><i class="fa fa-cloud"></i></a>
+    <a ng-click="updateWeather('tint')"><i class="fa fa-tint"></i></a>
 
     <input type="text" ng-model="formData.status" placeholder="What's on your mind?">
     <button ng-click="updateStatus()">Update Status</button>
 </div>
 
-
-<!-- News feed -->
 <div ng-if="!isCurrentUser">
     <i class="fa fa-{{userObj.mood}}-o"></i>
     <i class="fa fa-{{userObj.weather}}"></i>
 </div>
 
-
+<!-- News feed -->
 <div ng-repeat="post in posts | filter:postFilter | orderBy: '-time'">
     {{post.content}}
 </div>
 
 <!-- Days until they come home -->
 
+</div>

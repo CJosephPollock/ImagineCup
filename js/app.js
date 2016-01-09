@@ -217,6 +217,19 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         $scope.userObj.$save();
     } 
 
+    $scope.moodSelected = function(mood) {
+        if($scope.userObj.mood == mood) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.updateWeather = function(weather) {
+        $scope.userObj.weather = weather;
+        $scope.userObj.$save();
+    } 
+
 
     $scope.formData = {};
     $scope.updateStatus = function() {

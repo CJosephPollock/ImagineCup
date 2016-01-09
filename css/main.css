@@ -148,8 +148,16 @@ footer div i {
 	font-size: 3em;
 }
 
+#profileDiv i {
+	background-color: blue;
+	color: white;
+	padding: 15px;
+	border-radius: 3px;
+}
 
-
+#profileDiv .selectedMood i {
+	background-color: cyan;
+}
 
 
 
