@@ -202,6 +202,14 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     var posts = ref.child('posts');
     $scope.posts = $firebaseArray(posts);
 
+    $scope.postFilter = function(post) {
+        if(post.id == $stateParams.handle) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     $scope.currentTime = Date.now();
 
     $scope.updateMood = function(mood) {
@@ -209,8 +217,12 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         $scope.userObj.$save();
     } 
 
+
+    $scope.formData = {};
     $scope.updateStatus = function() {
-        
+        console.log($scope.formData.status);
+        $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.formData.status});
+        $scope.formData.status = '';
     }
 
 }])

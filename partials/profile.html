@@ -16,15 +16,24 @@
 <i class="fa fa-cloud"></i>
 <i class="fa fa-tint"></i>
 
-
-<input type="text" ng-model="status" placeholder="What's on your mind?">
-<button ng-click="updateStatus()">Update Status</button>
+    <input type="text" ng-model="formData.status" placeholder="What's on your mind?">
+    <button ng-click="updateStatus()">Update Status</button>
 </div>
+
+
 
 <!-- News feed -->
 <div ng-if="!isCurrentUser">
     <i class="fa fa-{{userObj.mood}}-o"></i>
     <i class="fa fa-{{userObj.weather}}-o"></i>
+
+
 </div>
+
+
+<div ng-repeat="post in posts | filter:postFilter">
+    {{post.content}}
+</div>
+
 <!-- Days until they come home -->
 
