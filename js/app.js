@@ -189,7 +189,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     }
 }])
 
-.controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseObject', '$stateParams', '$firebaseArray', function($scope, $http, $state, $firebaseObject, $stateParams, $firebaseArray) {
+.controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseObject', '$stateParams', '$firebaseArray', '$firebaseAuth', function($scope, $http, $state, $firebaseObject, $stateParams, $firebaseArray, $firebaseAuth) {
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
     $scope.userObj = $firebaseObject(ref.child('users').child($stateParams.handle));
 
@@ -225,6 +225,14 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         }
     }
 
+    $scope.weatherSelected = function(weather) {
+        if($scope.userObj.weather == weather) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     $scope.updateWeather = function(weather) {
         $scope.userObj.weather = weather;
         $scope.userObj.$save();
@@ -234,8 +242,26 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     $scope.formData = {};
     $scope.updateStatus = function() {
         console.log($scope.formData.status);
-        $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.formData.status, 'time':Firebase.ServerValue.TIMESTAMP});
+        $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.formData.status, 'time':Firebase.ServerValue.TIMESTAMP, 'handle':$scope.userObj.handle});
         $scope.formData.status = '';
+    }
+
+    var Auth = $firebaseAuth(ref);
+    //Test if already logged in (when page load)
+    var authData = Auth.$getAuth(); //get if we're authorized
+    if (authData) {
+        $scope.userId = authData.uid;
+        console.log($scope.userId);
+        $scope.changeVerification(true, authData.uid);
+    }
+
+    $scope.currentUser = $firebaseObject(ref.child('users').child($scope.userId));
+
+    $scope.commentData = {};
+    $scope.leaveComment = function() {
+        console.log($scope.commentData.status);
+        $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.commentData.status, 'time':Firebase.ServerValue.TIMESTAMP, 'handle':$scope.currentUser.handle});
+        $scope.commentData.status = '';
     }
 
 }])

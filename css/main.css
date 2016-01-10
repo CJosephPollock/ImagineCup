@@ -156,7 +156,11 @@ footer div i {
 }
 
 #profileDiv .selectedMood i {
-	background-color: cyan;
+	background-color: lightblue;
+}
+
+#profileDiv .weatherSelected i {
+	background-color: lightblue;
 }
 
 

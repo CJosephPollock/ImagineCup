@@ -12,9 +12,9 @@
     <a ng-click="updateMood('meh')" ng-class="{selectedMood : moodSelected('meh')}"><i class="fa fa-meh-o"></i></a>
     <a ng-click="updateMood('frown')" ng-class="{selectedMood : moodSelected('frown')}"><i class="fa fa-frown-o"></i></a>
 
-    <a ng-click="updateWeather('sun-o')"><i class="fa fa-sun-o"></i></a>
-    <a ng-click="updateWeather('cloud')"><i class="fa fa-cloud"></i></a>
-    <a ng-click="updateWeather('tint')"><i class="fa fa-tint"></i></a>
+    <a ng-click="updateWeather('sun-o')" ng-class="{selectedMood : weatherSelected('sun-o')}"><i class="fa fa-sun-o"></i></a>
+    <a ng-click="updateWeather('cloud')" ng-class="{selectedMood : weatherSelected('cloud')}"><i class="fa fa-cloud"></i></a>
+    <a ng-click="updateWeather('tint')" ng-class="{selectedMood : weatherSelected('tint')}"><i class="fa fa-tint"></i></a>
 
     <input type="text" ng-model="formData.status" placeholder="What's on your mind?">
     <button ng-click="updateStatus()">Update Status</button>
@@ -23,11 +23,15 @@
 <div ng-if="!isCurrentUser">
     <i class="fa fa-{{userObj.mood}}-o"></i>
     <i class="fa fa-{{userObj.weather}}"></i>
+    <input type="text" ng-model="commentData.status" placeholder="Leave a note">
+    <button ng-click="leaveComment()">Update Status</button>
+
 </div>
 
 <!-- News feed -->
 <div ng-repeat="post in posts | filter:postFilter | orderBy: '-time'">
     {{post.content}}
+    {{post.handle}}
 </div>
 
 <!-- Days until they come home -->
