@@ -163,6 +163,48 @@ footer div i {
 	background-color: lightblue;
 }
 
+#profileDiv #userPic {
+	border-radius: 75%;
+	max-height: 10vh;
+	display:inline;
+}
+
+#profileDiv {
+	font-size: 5em;
+}
+
+.header {
+	width: 100%;
+	background-color: darkgrey;
+	position: absolute;
+	top: 0px;
+}
+
+.feed {
+	width: 100%;
+	min-height: 5vh;
+	background-color: grey;
+	border: 2px solid darkgrey;
+}
+
+.postingDiv {
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	min-height: 3vh;
+	padding: 0px;
+	background-color: darkgrey;
+}
+
+.postingDiv input{
+	width: 80%;
+	height: 3vh;
+	font-size: 1.3em;
+}
+
+.postingDiv button {
+	height: 3vh;
+}
 
 
 

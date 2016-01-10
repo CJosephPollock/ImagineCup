@@ -1,10 +1,11 @@
 <div id="profileDiv">
+
+<div class="header">
+<img id="userPic" ng-src="{{userObj.avatar}}">
 {{userObj.handle}}
-
-<img ng-src="{{userObj.avatar}}">
-
+</div>
 <!-- Current time -->
-<p>{{currentTime | date:"MM/dd/yyyy 'at' h:mma"}}</p>
+<p id="time">{{currentTime | date:"MM/dd/yyyy 'at' h:mma"}}</p>
 
 <div ng-if="isCurrentUser">
     <!-- Mood status div -->
@@ -16,20 +17,23 @@
     <a ng-click="updateWeather('cloud')" ng-class="{selectedMood : weatherSelected('cloud')}"><i class="fa fa-cloud"></i></a>
     <a ng-click="updateWeather('tint')" ng-class="{selectedMood : weatherSelected('tint')}"><i class="fa fa-tint"></i></a>
 
-    <input type="text" ng-model="formData.status" placeholder="What's on your mind?">
-    <button ng-click="updateStatus()">Update Status</button>
+    <div class="postingDiv">
+        <input type="text" ng-model="formData.status" placeholder="What's on your mind?">
+        <button ng-click="updateStatus()">Update Status</button>
+    </div>
 </div>
 
 <div ng-if="!isCurrentUser">
     <i class="fa fa-{{userObj.mood}}-o"></i>
     <i class="fa fa-{{userObj.weather}}"></i>
-    <input type="text" ng-model="commentData.status" placeholder="Leave a note">
-    <button ng-click="leaveComment()">Update Status</button>
-
+    <div class="postingDiv">
+        <input type="text" ng-model="commentData.status" placeholder="Leave a note">
+        <button ng-click="leaveComment()">Update Status</button>
+    </div>
 </div>
 
 <!-- News feed -->
-<div ng-repeat="post in posts | filter:postFilter | orderBy: '-time'">
+<div class="feed" ng-repeat="post in posts | filter:postFilter | orderBy: '-time'">
     {{post.content}}
     {{post.handle}}
 </div>
