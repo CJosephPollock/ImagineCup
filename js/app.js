@@ -75,8 +75,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	  	var newUserInfo = {
 	  		'handle':$scope.userObj.handle,
 	  		'avatar':$scope.userObj.avatar,
-            'mood': 'happy',
-            'weather': 'sun'
+            'mood': 'smile',
+            'weather': 'sun-o'
 	  	};
 
 	  	$scope.users[authData.uid] = newUserInfo;
@@ -110,6 +110,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	var authData = Auth.$getAuth(); //get if we're authorized
 	if(authData) {
 	   $scope.userId = authData.uid;
+       $location.path('/')
 	}
 
 	//separate signIn function
@@ -152,6 +153,9 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 
 .controller('homeCtrl', ['$scope', '$http', '$state', '$firebaseAuth', '$firebaseObject', '$firebaseArray', function($scope, $http, $state, $firebaseAuth, $firebaseObject, $firebaseArray) {
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
+
+    var Auth = $firebaseAuth(ref);
+
 	var users = ref.child('users');
 	$scope.users = $firebaseObject(users);
 
@@ -160,7 +164,6 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 
 
 	$scope.connectionFilter = function(connection) {
-		console.log(connection);
 		if($scope.userId == connection.user1) {
 			$scope.user1 = true;
 			return true;
@@ -179,13 +182,12 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         $state.go('login');
     };
 
-    var Auth = $firebaseAuth(ref);
-    //Test if already logged in (when page load)
+
     var authData = Auth.$getAuth(); //get if we're authorized
-    if (authData) {
-        $scope.userId = authData.uid;
-        console.log($scope.userId);
-        $scope.changeVerification(true, authData.uid);
+    if(authData) {
+       $scope.userId = authData.uid;
+    } else {
+        console.log('error');
     }
 }])
 
@@ -278,7 +280,16 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 
     var connections = ref.child('connections');
     $scope.connections = $firebaseArray(connections);
-
+    $scope.existingConnections = [];
+    $scope.connections.$loaded().then(function(connections) {
+        for(var i = 0; i < connections.length; i++) {
+            if(connections[i].user1 == $scope.userId) {
+                $scope.existingConnections.push(connections[i].user2);
+            } else if(connections[i].user2 == $scope.userId) {
+                $scope.existingConnections.push(connections[i].user1);
+            } 
+        }
+    });
 
     var Auth = $firebaseAuth(ref);
     //Test if already logged in (when page load)
@@ -289,8 +300,9 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         $scope.changeVerification(true, authData.uid);
     }
 
+
     $scope.peopleFilter = function(person) {
-        if(person.$id == $scope.userId) {
+        if(person.$id == $scope.userId || $scope.existingConnections.indexOf(person.$id) != -1) {
             return false;
         }
         return true;
