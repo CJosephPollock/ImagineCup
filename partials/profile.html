@@ -8,6 +8,7 @@
 </div>
 <!-- Current time -->
 <p id="time">{{currentTime | date:"MM/dd/yyyy 'at' h:mma"}}</p>
+<ds-widget-clock gmt-offset="gmtValue" show-gmt-info id="clock"></ds-widget-clock>
 
 <div ng-if="isCurrentUser">
     <!-- Mood status div -->

@@ -1,14 +1,17 @@
-<button type="button" ng-click="logOut()">Log out</button>
-
+<div id="homeScreen">
+<h1>Welcome!</h1>
 
 <img id="profilePic" ng-src="{{users[userId].avatar}}" ui-sref="profile({currentUser: true, handle: userId})"></img>
+<!-- <span>{{users[userId].handle}}</span>
+ -->
+<div id="homeFunctionDiv">
+<button ui-sref="addNewConnection" id="newConnectionButton">Add New Connection</button>
+<button type="button" ng-click="logOut()" id="logOutButton">Log out</button>
+</div>
 
 
-<button ui-sref="addNewConnection">Add New Connection</button>
-
-<span>{{users[userId].handle}}</span>
-
-<h2 id="connectionLabel">Connections:</h2>
+<h2 id="connectionLabel">Want to know more about...</h2>
+<hr>
 <div class="connections" ng-repeat="connection in connections | filter: connectionFilter">
     <img ng-src="{{users[connection.user1].avatar}}" ng-if="!user1">
     <img ng-src="{{users[connection.user2].avatar}}" ng-if="user1">
@@ -16,5 +19,7 @@
 	<span ng-if="user1" ui-sref="profile({currentUser: false, handle: connection.user2})">{{users[connection.user2].handle}}</span>
     <i ng-if="!user1" class="fa fa-{{users[connection.user1].mood}}-o"></i>
     <i ng-if="user1" class="fa fa-{{users[connection.user2].mood}}-o"></i>
+    <hr>
 </div>
 
+</div>

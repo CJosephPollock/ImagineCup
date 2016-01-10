@@ -266,6 +266,7 @@ footer div i {
 	border: 3px solid black;
 	font-size: 1.5em;
 	border-radius: 11px;
+	text-align: center;
 }
 .form-group {
 	margin: 10px;
@@ -294,13 +295,92 @@ button {
 }
 
 
+/* HOME PAGE */
+
+#homeScreen {
+	text-align: center;
+}
+
+#homeScreen h2 {
+	font-size: 3em;
+}
+
+#profilePic {
+	max-height: 50vh;
+	max-width: 50vw;
+	display: block;
+	margin: auto;
+	border-radius: 50%;
+	border: 5px solid green;
+}
+
+#homeScreen hr {
+	width: 100%;
+
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 3px;
+
+}
+
+.connections {
+	height: 10vh;
+}
+
+.connections img {
+	border-radius: 50%;
+	height: 9em;
+	width: 9em;
+	position: absolute;
+	left: 10px;
+}
+
+.connections span {
+	margin-top: 7vh;
+	font-size: 8em;
+}
+
+.connections i {
+	position: absolute;
+	right: 10px;
+	margin-top: 10px;
+	font-size: 9em;
+}
+
+#homeFunctionDiv {
+	width: 100%;
+	position: absolute;
+	bottom: 0px;
+	padding: 10px;
+	background-color: #debb77;
+	border-top: 3px solid #d4a64e;
+	left: 0px;
+	height: 60px;
+}
+
+#newConnectionButton {
+	position: absolute;
+	left: 20px;
+}
+
+#logOutButton {
+	position: absolute;
+	right: 40px;
+}
+
+
+/* PROFILE */
 
 
 
-
-
-
-
+.widget-clock {
+	width: 30% !important;
+	float: right;
+}
 
 
 

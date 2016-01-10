@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
+angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock'])
     .config(function($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/');
@@ -57,6 +57,13 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	/* create a $firebaseObject for the users reference and add to scope (as $scope.users) */
 	$scope.users = $firebaseObject(users);
 	var Auth = $firebaseAuth(ref);
+
+
+
+
+
+
+
 
 	$scope.userObj = {};
 
@@ -210,6 +217,36 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
     $scope.userObj = $firebaseObject(ref.child('users').child($stateParams.handle));
 
+
+
+    if (navigator.geolocation) {
+        console.log("yo");
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+
+    function showPosition(position) {
+        console.log("Latitude: " + position.coords.latitude + 
+        " Longitude: " + position.coords.longitude); 
+
+        $http({
+          method: 'GET',
+          url: 'http://api.geonames.org/timezoneJSON?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude + '&username=demo'
+        }).then(function successCallback(response) {
+            console.log(response);
+            $scope.gmtValue = response.data.gmtOffset + 12; //????????????
+          }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+          });
+    }
+
+
+
+
+
+
     if($stateParams.currentUser == 'true') {
         $scope.isCurrentUser = true;
     } else {
@@ -280,7 +317,6 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
         $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.commentData.status, 'time':Firebase.ServerValue.TIMESTAMP, 'handle':$scope.currentUser.handle});
         $scope.commentData.status = '';
     }
-
 }])
 
 
