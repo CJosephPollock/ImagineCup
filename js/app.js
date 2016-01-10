@@ -68,6 +68,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	    'password': $scope.userObj.password
 	  }).then($scope.signIn)
 	  .then(function(authData) {
+
+
 	  	if($scope.userObj.avatar === undefined) {
 	  		$scope.userObj.avatar = "img/no-pic.png"
 	  	}
@@ -110,7 +112,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	var authData = Auth.$getAuth(); //get if we're authorized
 	if(authData) {
 	   $scope.userId = authData.uid;
-       $location.path('/')
+       $location.path('/');
 	}
 
 	//separate signIn function
@@ -119,6 +121,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 	    'email': $scope.userObj.email,
 	    'password': $scope.userObj.password
 	  });
+
 	  $location.path('/');
 	  return promise; //return promise so we can *chain promises*
 	                  //and call .then() on returned value
@@ -155,7 +158,12 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
 
     var Auth = $firebaseAuth(ref);
-
+    var authData = Auth.$getAuth(); //get if we're authorized
+    if(authData) {
+       $scope.userId = authData.uid;
+    } else {
+        console.log('error');
+    }
 	var users = ref.child('users');
 	$scope.users = $firebaseObject(users);
 
@@ -183,12 +191,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
     };
 
 
-    var authData = Auth.$getAuth(); //get if we're authorized
-    if(authData) {
-       $scope.userId = authData.uid;
-    } else {
-        console.log('error');
-    }
+
 }])
 
 .controller('profileCtrl', ['$scope', '$http', '$state', '$firebaseObject', '$stateParams', '$firebaseArray', '$firebaseAuth', function($scope, $http, $state, $firebaseObject, $stateParams, $firebaseArray, $firebaseAuth) {

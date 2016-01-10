@@ -1,8 +1,10 @@
 <div id="profileDiv">
 
 <div class="header">
-<img id="userPic" ng-src="{{userObj.avatar}}">
-{{userObj.handle}}
+    <img id="userPic" ng-src="{{userObj.avatar}}">
+    <h2>{{userObj.handle}}</h2>
+    <i ng-if="!isCurrentUser" class="fa fa-{{userObj.mood}}-o"></i>
+    <i ng-if="!isCurrentUser" class="fa fa-{{userObj.weather}}"></i>
 </div>
 <!-- Current time -->
 <p id="time">{{currentTime | date:"MM/dd/yyyy 'at' h:mma"}}</p>
@@ -24,8 +26,7 @@
 </div>
 
 <div ng-if="!isCurrentUser">
-    <i class="fa fa-{{userObj.mood}}-o"></i>
-    <i class="fa fa-{{userObj.weather}}"></i>
+
     <div class="postingDiv">
         <input type="text" ng-model="commentData.status" placeholder="Leave a note">
         <button ng-click="leaveComment()">Update Status</button>
