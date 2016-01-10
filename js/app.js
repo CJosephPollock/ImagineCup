@@ -61,12 +61,13 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	$scope.userObj = {};
 
 	$scope.signUp = function() {
+        Auth.$unauth();
 	  console.log("creating user " + $scope.userObj.email);
 	  //pass in an object with the new 'email' and 'password'
 	  Auth.$createUser({
 	    'email': $scope.userObj.email,
 	    'password': $scope.userObj.password
-	  })
+	  }).then($scope.signUpsignIn)
 	  .then(function(authData) {
 
 	  	if($scope.userObj.avatar === undefined) {
@@ -85,9 +86,10 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	  	$scope.users.$save();
 
 	  	$scope.userID = authData.uid;
-	  }).then($scope.signIn)
+	  }).then($scope.autoRedirect)
 	  .catch(function(error){
 	    //error handling (called on the promise)
+        console.log("sign up error");
 	    console.log(error);
 	  })
 	};
@@ -101,47 +103,45 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	Auth.$onAuth(function(authData) {
 	   if(authData) { //if we are authorized
 	      $scope.userId = authData.uid;
-	   }
-	   else {
+	   } else {
 	      $scope.userId = undefined;
 	   }
 	});
 
-	//Test if already logged in (when page load)
-	var authData = Auth.$getAuth(); //get if we're authorized
-	if(authData) {
-	   $scope.userId = authData.uid;
-       $location.path('/');
-	}
+
+    $scope.autoRedirect = function() {
+        console.log("redirecting..?");
+    	//Test if already logged in (when page load)
+    	var authData = Auth.$getAuth(); //get if we're authorized
+    	if(authData) {
+    	   $scope.userId = authData.uid;
+           $location.path('/');
+    	}
+    }
 
 	//separate signIn function
-	$scope.signIn = function() {
+	$scope.signUpsignIn = function() {
 	  var promise = Auth.$authWithPassword({
 	    'email': $scope.userObj.email,
 	    'password': $scope.userObj.password
 	  });
-        $location.path('/');
         return promise; //return promise so we can *chain promises*
                     //and call .then() on returned value
-
-
-	  // $location.path('/');
-
-
-    //   var promise = ref.authWithPassword({
-    //       email    : $scope.userObj.email,
-    //       password : $scope.userObj.password
-    //     }, function(error, authData) {
-    //       if (error) {
-    //         console.log("Login Failed!", error);
-    //       } else {
-    //         console.log("Authenticated successfully with payload:", authData);
-    //             $location.path('/')
-    //       }
-	   // });
     }
 
-
+    $scope.signIn = function() {
+        ref.authWithPassword({
+          email    : $scope.userObj.email,
+          password : $scope.userObj.password
+        }, function(error, authData) {
+          if (error) {
+            console.log("Login Failed!", error);
+          } else {
+            console.log("Authenticated successfully with payload:", authData);
+            $location.path('/');
+          }
+        });
+    }
 }])
 
 //This controller controls the modal that helps the user reset his or her password.  
@@ -168,16 +168,18 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     }
 }])
 
-.controller('homeCtrl', ['$scope', '$http', '$state', '$firebaseAuth', '$firebaseObject', '$firebaseArray', function($scope, $http, $state, $firebaseAuth, $firebaseObject, $firebaseArray) {
+.controller('homeCtrl', ['$scope', '$http', '$state', '$firebaseAuth', '$firebaseObject', '$firebaseArray', '$location', function($scope, $http, $state, $firebaseAuth, $firebaseObject, $firebaseArray, $location) {
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
+    console.log("home ctrl");
 
     var Auth = $firebaseAuth(ref);
     var authData = Auth.$getAuth(); //get if we're authorized
     if(authData) {
        $scope.userId = authData.uid;
     } else {
-        console.log('error');
+        $location.path('login');
     }
+
 	var users = ref.child('users');
 	$scope.users = $firebaseObject(users);
 
