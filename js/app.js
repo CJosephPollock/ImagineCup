@@ -117,15 +117,27 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap'])
 
 	//separate signIn function
 	$scope.signIn = function() {
-	  var promise = Auth.$authWithPassword({
-	    'email': $scope.userObj.email,
-	    'password': $scope.userObj.password
-	  });
+	  // var promise = Auth.$authWithPassword({
+	  //   'email': $scope.userObj.email,
+	  //   'password': $scope.userObj.password
+	  // });
 
-	  $location.path('/');
-	  return promise; //return promise so we can *chain promises*
-	                  //and call .then() on returned value
-	};
+	  // $location.path('/');
+	  // return promise; //return promise so we can *chain promises*
+	  //                 //and call .then() on returned value
+
+      var promise = ref.authWithPassword({
+          email    : $scope.userObj.email,
+          password : $scope.userObj.password
+        }, function(error, authData) {
+          if (error) {
+            console.log("Login Failed!", error);
+          } else {
+            console.log("Authenticated successfully with payload:", authData);
+                $location.path('/')
+          }
+	   });
+  }
 
 
 }])
