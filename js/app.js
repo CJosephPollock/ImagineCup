@@ -90,7 +90,6 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	    //error handling (called on the promise)
 	    console.log(error);
 	  })
-      .then($location.path('/'))
 	};
 
 	//Make LogOut function available to views
@@ -121,8 +120,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	    'email': $scope.userObj.email,
 	    'password': $scope.userObj.password
 	  });
-
-    return promise; //return promise so we can *chain promises*
+        $location.path('/');
+        return promise; //return promise so we can *chain promises*
                     //and call .then() on returned value
 
 
@@ -140,7 +139,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     //             $location.path('/')
     //       }
 	   // });
-  }
+    }
 
 
 }])
@@ -320,13 +319,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	$scope.users = $firebaseArray(users)
     $scope.people = [];
 	$scope.users.$loaded().then(function(people) {
-		$scope.people = people;            $scope.connect = function(person) {
-        $scope.people.splice($scope.people.indexOf(person), 1);        
-        // connections.push({
-        //  'user1': $scope.userId,
-        //  'user2': person.$id
-        // });
-    }
+		$scope.people = people;
 	});
 
     var connections = ref.child('connections');
@@ -360,11 +353,12 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     }
 
     $scope.connect = function(person) {
-        $scope.people.splice($scope.people.indexOf(person), 1);        
-        connections.push({
+        console.log(person);
+        $scope.connections.$add({
          'user1': $scope.userId,
          'user2': person.$id
         });
+        $scope.people.splice($scope.people.indexOf(person), 1);        
     }
 
 

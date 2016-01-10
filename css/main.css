@@ -328,6 +328,7 @@ button {
 }
 
 .connections {
+	border-bottom: 2px solid blue;
 	height: 10vh;
 }
 
@@ -515,7 +516,13 @@ button {
 	margin-top: 15px;
 }
 
-
+#homeConnectionDiv {
+	width: 100%;
+	position: absolute;
+	top: 40vh;
+	left: 0;
+	text-align: center;
+}
 
 
 
