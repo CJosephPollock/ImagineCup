@@ -2,9 +2,10 @@
 
 <input type="text" ng-model="searchPeople" id="peopleSearch" placeholder="Search by username">
 
-<div ng-repeat="person in people | filter: peopleFilter" class="connections">
+<div ng-repeat="person in people | filter: peopleFilter | filter: searchPeople" class="connections">
 	<img ng-src="{{person.avatar}}">
-	{{person.handle}}
+	<span>{{person.handle}}</span>
 	<i class="fa fa-user-plus" ng-click="connect(person)"></i>
+	<!--  -->
 </div>
 </div>

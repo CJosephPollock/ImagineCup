@@ -237,7 +237,7 @@ footer div i {
 
 */
 
-* {
+body {
 	background-color: #f2e4c9;
 }
 
@@ -375,18 +375,145 @@ button {
 
 /* PROFILE */
 
+#profileDiv {
+	width: 100%;
+}
 
+.header {
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.header i {
+	position: absolute;
+	left: 420px;
+	vertical-align: right;
+}
+
+#weatherIcon {
+	top: 10px;
+	font-size: 10em;
+}
+
+#moodIcon {
+	top: 200px;
+	font-size: 12em;
+}
 
 .widget-clock {
 	width: 30% !important;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+#userPic {
+	max-height: 22vh;
+
+}
+
+.header h2 {
+	font-size: 4em;
+	position: absolute;
+	top: 25vh;
+	left: 10px;
+}
+
+.postingDiv {
+	width: 100%;
+	position: absolute;
+	bottom: 0px !important;
+	left: 0px;
+	min-height: 60px;
+}
+
+.postingDiv button {
+	position: absolute;
+	right: 0px;
+}
+
+.postingDiv input {
+	position: absolute;
+	left: 20px;
+	width: 70%;
+	height: 50px;
+	font-size: 3em;
+}
+
+.feed {
+	width: 100%;
+	margin-top: 35vh;
+	height: 65vh;
+}
+
+.feed div {
+	min-height: 105px;
+	margin-bottom: 10px;
+	border-top: 2px solid black; 
+}
+
+.feed .content {
+	font-size: 4em;
+}
+
+.feed .author {
+	float: left;
+	font-size: 1.5em;
+}
+
+#changeConditions {
+	width: 100%;
+	position: absolute;
+	left: 0px;
+	top: 22vh;
+}
+
+#changeConditions i {
+	font-size: 6em;
+}
+
+#weatherDiv {
 	float: right;
 }
 
+#weatherDiv i {
+	margin-right: 30px;
+}
 
+#moodDiv {
+	float: left;
+}
 
+#moodDiv i {
+	margin-left: 30px;
+}
 
+#profileDiv .selectedMood i {
+	border-bottom: 5px solid blue;
+}
 
+#profileDiv .selectedWeather i {
+	border-bottom: 5px solid blue;
+}
 
+/* NEW CONNECTIONS */
+
+#newConnectionPage {
+	text-align: center;
+}
+
+.connections span {
+	font-size: 7em;
+}
+
+#newConnectionPage input {
+	width: 75%;
+	height: 50px;
+	font-size: 3em;
+	margin-top: 15px;
+}
 
 
 

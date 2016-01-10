@@ -58,13 +58,6 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	$scope.users = $firebaseObject(users);
 	var Auth = $firebaseAuth(ref);
 
-
-
-
-
-
-
-
 	$scope.userObj = {};
 
 	$scope.signUp = function() {
@@ -73,9 +66,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	  Auth.$createUser({
 	    'email': $scope.userObj.email,
 	    'password': $scope.userObj.password
-	  }).then($scope.signIn)
+	  })
 	  .then(function(authData) {
-
 
 	  	if($scope.userObj.avatar === undefined) {
 	  		$scope.userObj.avatar = "img/no-pic.png"
@@ -93,11 +85,12 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 	  	$scope.users.$save();
 
 	  	$scope.userID = authData.uid;
-	  })
+	  }).then($scope.signIn)
 	  .catch(function(error){
 	    //error handling (called on the promise)
 	    console.log(error);
 	  })
+      .then($location.path('/'))
 	};
 
 	//Make LogOut function available to views
@@ -124,26 +117,29 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 
 	//separate signIn function
 	$scope.signIn = function() {
-	  // var promise = Auth.$authWithPassword({
-	  //   'email': $scope.userObj.email,
-	  //   'password': $scope.userObj.password
-	  // });
+	  var promise = Auth.$authWithPassword({
+	    'email': $scope.userObj.email,
+	    'password': $scope.userObj.password
+	  });
+
+    return promise; //return promise so we can *chain promises*
+                    //and call .then() on returned value
+
 
 	  // $location.path('/');
-	  // return promise; //return promise so we can *chain promises*
-	  //                 //and call .then() on returned value
 
-      var promise = ref.authWithPassword({
-          email    : $scope.userObj.email,
-          password : $scope.userObj.password
-        }, function(error, authData) {
-          if (error) {
-            console.log("Login Failed!", error);
-          } else {
-            console.log("Authenticated successfully with payload:", authData);
-                $location.path('/')
-          }
-	   });
+
+    //   var promise = ref.authWithPassword({
+    //       email    : $scope.userObj.email,
+    //       password : $scope.userObj.password
+    //     }, function(error, authData) {
+    //       if (error) {
+    //         console.log("Login Failed!", error);
+    //       } else {
+    //         console.log("Authenticated successfully with payload:", authData);
+    //             $location.path('/')
+    //       }
+	   // });
   }
 
 
@@ -243,10 +239,6 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     }
 
 
-
-
-
-
     if($stateParams.currentUser == 'true') {
         $scope.isCurrentUser = true;
     } else {
@@ -316,6 +308,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
         console.log($scope.commentData.status);
         $scope.posts.$add({'id':$scope.userObj.$id, 'content':$scope.commentData.status, 'time':Firebase.ServerValue.TIMESTAMP, 'handle':$scope.currentUser.handle});
         $scope.commentData.status = '';
+        $scope.posts.$save();
     }
 }])
 
@@ -325,8 +318,15 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 
 	var users = ref.child('users');
 	$scope.users = $firebaseArray(users)
+    $scope.people = [];
 	$scope.users.$loaded().then(function(people) {
-		$scope.people = people;
+		$scope.people = people;            $scope.connect = function(person) {
+        $scope.people.splice($scope.people.indexOf(person), 1);        
+        // connections.push({
+        //  'user1': $scope.userId,
+        //  'user2': person.$id
+        // });
+    }
 	});
 
     var connections = ref.child('connections');
@@ -359,14 +359,15 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
         return true;
     }
 
+    $scope.connect = function(person) {
+        $scope.people.splice($scope.people.indexOf(person), 1);        
+        connections.push({
+         'user1': $scope.userId,
+         'user2': person.$id
+        });
+    }
 
 
-	$scope.connect = function(person) {
-		connections.push({
-			'user1': $scope.userId,
-			'user2': person.$id
-		});
-	}
 
 	//make a connections child, which has two users.  
 	//if the currently signed in account is one of those users, display the OTHER user on their home page.  
