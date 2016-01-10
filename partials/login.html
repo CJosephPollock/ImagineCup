@@ -1,46 +1,17 @@
-<!-- 
-
-<form name="signinForm" novalidate id="signUpForm">
-
-        <h2>Log in or Sign Up</h2> -->
-
-<!-- 		<button ng-click="isAbroad(true)">Abroad</button>
-		<button ng-click="isAbroad(false)">Staying at home</button> -->
 
 
-        <!-- Bind model "email" to this input and make the help-block show up if bad format -->
-<!--         <div class="form-group">
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" class="form-control" ng-model="newUser.email" required>
-	Show an error message if the email is not valid 
-            <p class="help-block" ng-if="signinForm.email.$invalid && signinForm.email.$touched">Not an email!</p>
-        </div>
+
+<div id="splashScreen">
+<i class="fa fa-home"></i>
+<h1>Home Abroad</h1>
+</div>
 
 
-        Bind model "password" to this input
-        <div class="form-group">
-            <label for="pw">Password:</label><br>
-            <input id="pw" name="password" type="password" class="form-control" required ng-model="newUser.password">
-        </div>
-
-        <button type="submit" class="btn btn-primary" ng-click="signUp()"
-                ng-disabled="signinForm.$invalid">Sign-up
-        </button>
-
-
-        <button type="submit" class="btn btn-primary" ng-click="signIn()"
-                ng-disabled="signinForm.email.$invalid || signinForm.password.$invalid">Sign-in
-        </button>
-        <br>
-        <a ng-click="resetPassword()">Forgot your password?</a>
-
-        <p>{{errorMessage}}</p>
-    </form> -->
-<form name="signupForm" novalidate>
+<form name="signupForm" novalidate id="signupForm">
 
 	<!-- Bind model "handle" to this input and make the help-block show up if too short -->
 	<div class="form-group">
-		<label for="handle">Handle:</label>
+		<label for="handle">Handle:</label><br>
 		<input id="handle" name="handle" class="form-control" ng-model="userObj.handle" ng-minlength="3" required>
 		<!-- Add an error message if the length is too short -->	
 		<p class="help-block" ng-if="signupForm.handle.$error.minlength">Too short!</p>
@@ -48,25 +19,25 @@
 
 	<!-- Bind model "avatar" to this input -->
 	<div class="form-group">
-		<label for="avatar">Avatar Image URL:</label>
-		<img class="avatar" ng-src="{{avatar}}">
-		<input id="avatar" name="avatar" ng-model="userObj.avatar" class="form-control">
+		<label for="avatar">Avatar Image URL:</label><br>
+<!-- 		<img class="avatar" ng-src="{{avatar}}">
+ -->		<input id="avatar" name="avatar" ng-model="userObj.avatar" class="form-control">
 	</div>
 
 	<!-- Bind model "email" to this input and make the help-block show up if bad format -->
 	<div class="form-group">
-		<label for="email">Email:</label>
+		<label for="email">Email:</label><br>
 		<input type="email" id="email" name="email" ng-model="userObj.email" class="form-control" >
 		<!-- Show an error message if the email is not valid -->	
-		<p class="help-block" >Not an email!</p>
+<!-- 		<p class="help-block" >Not an email!</p> -->
 	</div>
 
 	<!-- Bind model "password" to this input -->
 	<div class="form-group">
-		<label for="pw">Password:</label>
+		<label for="pw">Password:</label><br>
 		<input id="pw" name="password" type="password" ng-model="userObj.password" class="form-control" required>
 	</div>
-
+    <br>
 	<!-- Submit buttons -->
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary" ng-click="signUp()" ng-disabled="signupForm.$invalid" >Sign-up</button> 
