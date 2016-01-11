@@ -11,6 +11,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.1.js"></script>
 
+	<script type="text/javascript" src="//api.filestackapi.com/filestack.js"></script>
+
 
     <script src="bower_components/angular-ui-clock/dist/angular-clock.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Syncopate:400,700" rel="stylesheet" type="text/css">
@@ -23,9 +25,8 @@
 </head>
 <body ng-controller="MASTER_CTRL">
 
-<!-- 	<div id="nav">
-		<a ui-sref="home"><h1>Home Abroad</h1></a>
-	</div> -->
+    <input ng-if="isProfile()" id="filePicker" type="filepicker" data-fp-apikey="ASBoahVaSqCW18lS2QxQKz"
+onchange="alert(event.fpfile.url)">
 
 	<div id="customView" ui-view></div>
 </body>
