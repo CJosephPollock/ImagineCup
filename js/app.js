@@ -30,7 +30,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     })
 
 //Overall controller.  This is attached to the body tag in index.html.  
-.controller('MASTER_CTRL', ['$scope', '$http', '$firebaseArray', '$state', function($scope, $http, $firebaseArray, $state) {
+.controller('MASTER_CTRL', ['$scope', '$http', '$firebaseArray', '$firebaseObject', '$state', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseObject, $state, $firebaseAuth) {
+
 
     $scope.changeVerification = function(verified, id) {
         $scope.userVerified = verified;
@@ -46,10 +47,47 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
         return $scope.userID;
     }
 
+
     $scope.isProfile = function() {
-        console.log($state == 'profile');
-        return true;
+        console.log($state.current.name == 'profile');
+        return $state.current.name == 'profile' || true;
     }
+
+    var ref = new Firebase("https://homeabroad.firebaseio.com/");
+    var posts = ref.child('posts');
+    var users = ref.child('users');
+    var Auth = $firebaseAuth(ref);
+    /* create a $firebaseObject for the users reference and add to scope (as $scope.users) */
+    $scope.posts = $firebaseArray(posts);
+    $scope.users = $firebaseObject(users);
+
+    var authData = Auth.$getAuth(); //get if we're authorized
+    if (authData) {
+        $scope.userId = authData.uid;
+    } else {
+        $location.path('login');
+    }
+
+    $scope.userObj = $firebaseObject(ref.child('users').child($scope.userId));
+    console.log($scope.userObj);
+
+    var element = document.getElementById('pick-file')
+    element.type="filepicker";
+    element.setAttribute('data-fp-mimetype', 'image/*');
+    element.setAttribute('data-fp-apikey', 'ASBoahVaSqCW18lS2QxQKz');
+    element.onchange = function(e){
+        var imgURL = JSON.stringify(e.fpfile.url);
+        imgURL = imgURL.replace("\"", '');
+        imgURL = imgURL.replace("\"", '');
+
+        $scope.posts.$add({
+            'id': $scope.userObj.$id,
+            'image': imgURL,
+            'content': '',
+            'time': Firebase.ServerValue.TIMESTAMP,
+            'handle': $scope.userObj.handle
+        });
+    };
 }])
 
 //This is the controller for the intial login page.  This is the first page the user sees. 
@@ -355,6 +393,8 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
         $scope.commentData.status = '';
         $scope.posts.$save();
     }
+
+
 }])
 
 //This controls the view in which you can make new connections.  

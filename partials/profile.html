@@ -1,10 +1,13 @@
 
 
+    
+
+
 
 <div id="profileDiv">
 
 <div class="header">
-    <img id="userPic" ng-src="{{userObj.avatar}}">
+<!--     <img id="userPic" ng-src="{{userObj.avatar}}"> -->
     <h2>{{userObj.handle}}</h2>
     <i ng-if="!isCurrentUser" class="fa fa-{{userObj.mood}}-o" id="moodIcon" ></i>
     <i ng-if="!isCurrentUser" class="fa fa-{{userObj.weather}}" id="weatherIcon"></i>
@@ -35,9 +38,11 @@
     <button ng-click="updateStatus()">Update Status</button>
 </div>
 
+
 <!-- News feed -->
 <div class="feed">
 <div ng-repeat="post in posts | filter:postFilter | orderBy: '-time'">
+    <img ng-src="{{post.image}}">
     <span class="content">{{post.content}}</span><br>
     <span class="author">{{post.handle}}</span>
 </div>
