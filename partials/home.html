@@ -14,8 +14,10 @@
 <hr>
 	<div id="homeConnectionDiv">
 		<div class="connections" ng-repeat="connection in connections | filter: connectionFilter">
-		    <img ng-src="{{users[connection.user1].avatar}}" ng-if="!user1">
-		    <img ng-src="{{users[connection.user2].avatar}}" ng-if="user1">
+		    <img ng-if="(users[connection.user1].avatar) != 'NA' && !user1" ng-src="{{users[connection.user1].avatar}}">
+		    <img ng-if="(users[connection.user2].avatar) != 'NA' && user1" ng-src="{{users[connection.user2].avatar}}">
+			<i class="fa fa-user" ng-if="(users[connection.user1].avatar) == 'NA'"></i>
+
 			<span ng-if="!user1" ui-sref="profile({currentUser: false, handle: connection.user1})">{{users[connection.user1].handle}}</span>
 			<span ng-if="user1" ui-sref="profile({currentUser: false, handle: connection.user2})">{{users[connection.user2].handle}}</span>
 		    <i ng-if="!user1" class="fa fa-{{users[connection.user1].mood}}-o"></i>

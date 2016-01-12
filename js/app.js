@@ -30,7 +30,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     })
 
 //Overall controller.  This is attached to the body tag in index.html.  
-.controller('MASTER_CTRL', ['$scope', '$http', '$firebaseArray', '$firebaseObject', '$state', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseObject, $state, $firebaseAuth) {
+.controller('MASTER_CTRL', ['$scope', '$http', '$firebaseArray', '$firebaseObject', '$location', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseObject, $location, $firebaseAuth) {
 
 
     $scope.changeVerification = function(verified, id) {
@@ -63,13 +63,17 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 
     var authData = Auth.$getAuth(); //get if we're authorized
     if (authData) {
+        console.log(authData);
         $scope.userId = authData.uid;
+        $scope.userObj = $firebaseObject(ref.child('users').child($scope.userId));
+        // if(authData.facebook.profileImageURL == null) {
+        //     $scope.userObj.avatar = authData.facebook.profileImageURL;
+        // }
+        console.log($scope.userObj);
+        $location.path('home');
     } else {
         $location.path('login');
     }
-
-    $scope.userObj = $firebaseObject(ref.child('users').child($scope.userId));
-    console.log($scope.userObj);
 
     var element = document.getElementById('pick-file')
     element.type="filepicker";
@@ -91,7 +95,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 }])
 
 //This is the controller for the intial login page.  This is the first page the user sees. 
-.controller('loginCtrl', ['$scope', '$firebaseObject', '$firebaseAuth', '$location', '$uibModal', function($scope, $firebaseObject, $firebaseAuth, $location, $uibModal) {
+.controller('loginCtrl', ['$scope', '$firebaseObject', '$firebaseAuth', '$location', '$uibModal', '$state', function($scope, $firebaseObject, $firebaseAuth, $location, $uibModal, $state) {
 
     /* define reference to your firebase app */
     var ref = new Firebase("https://homeabroad.firebaseio.com/");
@@ -116,7 +120,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
             .then(function(authData) {
 
                 if ($scope.userObj.avatar === undefined) {
-                    $scope.userObj.avatar = "img/no-pic.png"
+                    $scope.userObj.avatar = "NA"
                 }
 
                 var newUserInfo = {
@@ -153,16 +157,13 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
         }
     });
 
-    $scope.autoRedirect = function() {
-        console.log("redirecting..?");
-        //Test if already logged in (when page load)
+ 
         var authData = Auth.$getAuth(); //get if we're authorized
         if (authData) {
             $scope.userId = authData.uid;
             $location.path('/');
         }
-    }
-
+   
     //There are two sign in functions because there was a problem with
     //A user signing up (creating an account) and then being redirected to a 
     //blank home page.  Alternatively, if a user was just signing in, they would just sit on the
@@ -189,6 +190,21 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
                 console.log("Authenticated successfully with payload:", authData);
                 $location.path('/');
             }
+        });
+    }
+
+
+    $scope.FBlogin = function() {
+        ref.authWithOAuthRedirect("facebook", function(error, authData) {
+          if (error) {
+            console.log("Login Failed!", error);
+          } else {
+            // the access token will allow us to make Open Graph API calls
+            console.log("hello!");
+            console.log(authData.facebook.accessToken);
+          }
+        }, {
+          scope: "user_posts" // the permissions requested
         });
     }
 }])
@@ -222,11 +238,11 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 //Can add new connections as well as logout from this controller.  
 .controller('homeCtrl', ['$scope', '$http', '$state', '$firebaseAuth', '$firebaseObject', '$firebaseArray', '$location', function($scope, $http, $state, $firebaseAuth, $firebaseObject, $firebaseArray, $location) {
     var ref = new Firebase('https://homeabroad.firebaseio.com/');
-    console.log("home ctrl");
 
     var Auth = $firebaseAuth(ref);
     var authData = Auth.$getAuth(); //get if we're authorized
     if (authData) {
+        console.log(authData);
         $scope.userId = authData.uid;
     } else {
         $location.path('login');
