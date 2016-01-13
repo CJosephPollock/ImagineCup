@@ -30,7 +30,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     })
 
 //Overall controller.  This is attached to the body tag in index.html.  
-.controller('MASTER_CTRL', ['$scope', '$http', '$firebaseArray', '$firebaseObject', '$location', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseObject, $location, $firebaseAuth) {
+.controller('MASTER_CTRL', ['$scope', '$http', '$firebaseArray', '$firebaseObject', '$state', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseObject, $state, $firebaseAuth) {
 
 
     $scope.changeVerification = function(verified, id) {
@@ -47,11 +47,42 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
         return $scope.userID;
     }
 
+    $scope.$on('$viewContentLoaded', function(data){
+        var x = document.getElementsByClassName('fp__btn')[0];
+        console.log(x);
+        console.log($state.current.name);
+        console.log($state.current.name.indexOf('profile') != -1);
+        $scope.isProfile = $state.current.name.indexOf('profile') != -1;
+        if($scope.isProfile == true) {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    });
 
-    $scope.isProfile = function() {
-        console.log($state.current.name == 'profile');
-        return $state.current.name == 'profile' || true;
-    }
+    
+
+     var element = document.getElementById('pick-file');
+            element.type="filepicker";
+            element.setAttribute('data-fp-mimetype', 'image/*');
+            element.setAttribute('data-fp-apikey', 'ASBoahVaSqCW18lS2QxQKz');
+            element.onchange = function(e){
+                var imgURL = JSON.stringify(e.fpfile.url);
+                imgURL = imgURL.replace("\"", '');
+                imgURL = imgURL.replace("\"", '');
+
+                $scope.posts.$add({
+                    'id': $scope.userObj.$id,
+                    'image': imgURL,
+                    'content': '',
+                    'time': Firebase.ServerValue.TIMESTAMP,
+                    'handle': $scope.userObj.handle
+                });
+            };
+        
+
+
+
 
     var ref = new Firebase("https://homeabroad.firebaseio.com/");
     var posts = ref.child('posts');
@@ -63,36 +94,19 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 
     var authData = Auth.$getAuth(); //get if we're authorized
     if (authData) {
-        console.log(authData);
         $scope.userId = authData.uid;
         $scope.userObj = $firebaseObject(ref.child('users').child($scope.userId));
         // if(authData.facebook.profileImageURL == null) {
         //     $scope.userObj.avatar = authData.facebook.profileImageURL;
         // }
-        console.log($scope.userObj);
-        $location.path('home');
+        // console.log($scope.userObj);
+        $state.go('home');
     } else {
-        $location.path('login');
+        $state.go('login');
     }
 
-    var element = document.getElementById('pick-file')
-    element.type="filepicker";
-    element.setAttribute('data-fp-mimetype', 'image/*');
-    element.setAttribute('data-fp-apikey', 'ASBoahVaSqCW18lS2QxQKz');
-    element.onchange = function(e){
-        var imgURL = JSON.stringify(e.fpfile.url);
-        imgURL = imgURL.replace("\"", '');
-        imgURL = imgURL.replace("\"", '');
-
-        $scope.posts.$add({
-            'id': $scope.userObj.$id,
-            'image': imgURL,
-            'content': '',
-            'time': Firebase.ServerValue.TIMESTAMP,
-            'handle': $scope.userObj.handle
-        });
-    };
 }])
+
 
 //This is the controller for the intial login page.  This is the first page the user sees. 
 .controller('loginCtrl', ['$scope', '$firebaseObject', '$firebaseAuth', '$location', '$uibModal', '$state', function($scope, $firebaseObject, $firebaseAuth, $location, $uibModal, $state) {
@@ -242,7 +256,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     var Auth = $firebaseAuth(ref);
     var authData = Auth.$getAuth(); //get if we're authorized
     if (authData) {
-        console.log(authData);
+        // console.log(authData);
         $scope.userId = authData.uid;
     } else {
         $location.path('login');

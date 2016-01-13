@@ -24,11 +24,11 @@
 
 </head>
 <body ng-controller="MASTER_CTRL">
-<!--     <input ng-show="isProfile()" id="filePicker" type="filepicker" data-fp-apikey="ASBoahVaSqCW18lS2QxQKz" onchange="imageUploadLink(event.fpfile.url)">   -->
+<!--     <input ng-if="isProfile" id="filePicker" type="filepicker" data-fp-apikey="ASBoahVaSqCW18lS2QxQKz" onchange="imageUploadLink(event.fpfile.url)">   -->
 
     <input id="pick-file">
-
 	<div id="customView" ui-view></div>
+
 
 </body>
 <html>

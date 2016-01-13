@@ -3,6 +3,12 @@ body {
 	background-color: #f2e4c9;
 }
 
+.fp__btn {
+	position: absolute;
+	left: 30px;
+	top: 10px;
+}
+
 /* LOGIN PAGE */
 #splashScreen {
 	width: 100%;
