@@ -3,11 +3,6 @@ body {
 	background-color: #f2e4c9;
 }
 
-.fp__btn {
-	position: absolute;
-	left: 30px;
-	top: 10px;
-}
 
 /* LOGIN PAGE */
 #splashScreen {
@@ -64,6 +59,9 @@ button {
 
 
 /* HOME PAGE */
+
+
+
 
 #homeScreen {
 	text-align: center;
@@ -148,6 +146,12 @@ button {
 	width: 100%;
 }
 
+.fp__btn {
+	position: absolute;
+	left: 30px;
+	top: 10px;
+}
+
 .header {
 	width: 100%;
 	position: absolute;
@@ -180,8 +184,8 @@ button {
 
 #userPic {
 	max-height: 22vh;
-
 }
+
 
 .header h2 {
 	font-size: 4em;
@@ -204,9 +208,8 @@ button {
 }
 
 .postingDiv input {
-	position: absolute;
-	left: 20px;
-	width: 70%;
+	float: center;
+	width: 50%;
 	height: 50px;
 	font-size: 3em;
 }
@@ -298,7 +301,10 @@ button {
 	z-index: 99999 !important;
 }
 
+/* MEDIA QUERIES */
+@media screen and (min-width:768px) {
 
+}
 
 
 

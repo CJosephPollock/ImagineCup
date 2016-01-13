@@ -34,7 +34,7 @@
 </div>
 
 <div class="postingDiv" ng-if="isCurrentUser">
-    <input type="text" ng-model="formData.status" placeholder="What's on your mind?">
+    <input type="text" ng-model="formData.status" placeholder="What's on your mind?" class="comment">
     <button ng-click="updateStatus()">Update Status</button>
 </div>
 
@@ -50,7 +50,7 @@
 
 <div ng-if="!isCurrentUser">
     <div class="postingDiv">
-        <input type="text" ng-model="commentData.status" placeholder="Leave a comment">
+        <input type="text" ng-model="commentData.status" placeholder="Leave a comment" class="comment">
         <button ng-click="leaveComment()">Leave Comment</button>
     </div>
 </div>
