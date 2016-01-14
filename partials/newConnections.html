@@ -3,8 +3,9 @@
 <input type="text" ng-model="searchPeople" id="peopleSearch" placeholder="Search by username">
 
 <div ng-repeat="person in people | filter: peopleFilter | filter: searchPeople" class="connections">
-	<img ng-src="{{person.avatar}}">
+    <i class="fa fa-user connectAvatar" ng-if="person.avatar == 'NA'"></i>
+	<img ng-src="{{person.avatar}}" ng-if="person.avatar != 'NA'">
 	<span>{{person.handle}}</span>
-	<i class="fa fa-user-plus" ng-click="connect(person)"></i>
+	<i class="fa fa-user-plus addUserPic" ng-click="connect(person)"></i>
 </div>
 </div>

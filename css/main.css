@@ -326,9 +326,23 @@ button {
 	border-radius: 3px;
 }
 
+.connectAvatar {
+	float: left;
+	font-size: 3em;
+	margin-left: 30px;
+	margin-top: 10px;
+}
 
-#filePicker {
+.addUserPic {
+	float: right;
+	font-size: 3em;
+	margin-right: 30px;
+	margin-top: 10px;
+}
+
+
+/*#filePicker {
 	position: absolute !important;
 	left: 300px !important;
 	z-index: 99999 !important;
-}
+}*/
