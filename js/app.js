@@ -32,6 +32,14 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 //Overall controller.  This is attached to the body tag in index.html.  
 .controller('MASTER_CTRL', ['$scope', '$http', '$firebaseArray', '$firebaseObject', '$state', '$firebaseAuth', function($scope, $http, $firebaseArray, $firebaseObject, $state, $firebaseAuth) {
 
+    var ref = new Firebase("https://homeabroad.firebaseio.com/");
+    var posts = ref.child('posts');
+    var users = ref.child('users');
+    var Auth = $firebaseAuth(ref);
+    /* create a $firebaseObject for the users reference and add to scope (as $scope.users) */
+    $scope.posts = $firebaseArray(posts);
+    $scope.users = $firebaseObject(users);
+
 
     $scope.changeVerification = function(verified, id) {
         $scope.userVerified = verified;
@@ -50,6 +58,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     $scope.$on('$viewContentLoaded', function(data){
         var x = document.getElementsByClassName('fp__btn')[0];
         console.log(x);
+        $scope.currentUserID = $state.params.handle;
         console.log($state.current.name);
         console.log($state.current.name.indexOf('profile') != -1);
         $scope.isProfile = $state.current.name.indexOf('profile') != -1;
@@ -60,37 +69,32 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
         }
     });
 
-    
 
-     var element = document.getElementById('pick-file');
-            element.type="filepicker";
-            element.setAttribute('data-fp-mimetype', 'image/*');
-            element.setAttribute('data-fp-apikey', 'ASBoahVaSqCW18lS2QxQKz');
-            element.onchange = function(e){
-                var imgURL = JSON.stringify(e.fpfile.url);
-                imgURL = imgURL.replace("\"", '');
-                imgURL = imgURL.replace("\"", '');
+    var element = document.getElementById('pick-file');
+    element.type="filepicker";
+    element.setAttribute('data-fp-mimetype', 'image/*');
+    element.setAttribute('data-fp-apikey', 'ASBoahVaSqCW18lS2QxQKz');
+    element.onchange = function(e){
+        console.log(e.fpfile.url);
+        // var imgURL = JSON.stringify(e.fpfile.url);
+        var imgURL = e.fpfile.url;
+        imgURL = imgURL.replace("\"", '');
+        imgURL = imgURL.replace("\"", '');
 
-                $scope.posts.$add({
-                    'id': $scope.userObj.$id,
-                    'image': imgURL,
-                    'content': '',
-                    'time': Firebase.ServerValue.TIMESTAMP,
-                    'handle': $scope.userObj.handle
-                });
-            };
+        console.log($scope.userObj.$id);
+        console.log(imgURL);
+        console.log($scope.userObj.handle);
+
+        $scope.posts.$add({
+            'id': $scope.currentUserID,
+            'image': imgURL,
+            'content': '',
+            'time': Firebase.ServerValue.TIMESTAMP,
+            'handle': $scope.userObj.handle
+        });
+    };
         
 
-
-
-
-    var ref = new Firebase("https://homeabroad.firebaseio.com/");
-    var posts = ref.child('posts');
-    var users = ref.child('users');
-    var Auth = $firebaseAuth(ref);
-    /* create a $firebaseObject for the users reference and add to scope (as $scope.users) */
-    $scope.posts = $firebaseArray(posts);
-    $scope.users = $firebaseObject(users);
 
     var authData = Auth.$getAuth(); //get if we're authorized
     if (authData) {
@@ -208,19 +212,19 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
     }
 
 
-    $scope.FBlogin = function() {
-        ref.authWithOAuthRedirect("facebook", function(error, authData) {
-          if (error) {
-            console.log("Login Failed!", error);
-          } else {
-            // the access token will allow us to make Open Graph API calls
-            console.log("hello!");
-            console.log(authData.facebook.accessToken);
-          }
-        }, {
-          scope: "user_posts" // the permissions requested
-        });
-    }
+    // $scope.FBlogin = function() {
+    //     ref.authWithOAuthRedirect("facebook", function(error, authData) {
+    //       if (error) {
+    //         console.log("Login Failed!", error);
+    //       } else {
+    //         // the access token will allow us to make Open Graph API calls
+    //         console.log("hello!");
+    //         console.log(authData.facebook.accessToken);
+    //       }
+    //     }, {
+    //       scope: "user_posts" // the permissions requested
+    //     });
+    // }
 }])
 
 //This controller controls the modal that helps the user reset his or her password.  

@@ -1,62 +1,42 @@
-
-
-    
-
-
-
 <div id="profileDiv">
-
-<div class="header">
-<!--     <img id="userPic" ng-src="{{userObj.avatar}}"> -->
-    <h2>{{userObj.handle}}</h2>
-    <i ng-if="!isCurrentUser" class="fa fa-{{userObj.mood}}-o" id="moodIcon" ></i>
-    <i ng-if="!isCurrentUser" class="fa fa-{{userObj.weather}}" id="weatherIcon"></i>
-    <ds-widget-clock gmt-offset="gmtValue" id="clock"></ds-widget-clock>
-</div>
-<!-- Current time -->
-<!-- <p id="time">{{currentTime | date:"MM/dd/yyyy 'at' h:mma"}}</p> -->
-
-
-<div ng-if="isCurrentUser" id="changeConditions">
-    <!-- Mood status div -->
-    <div id="moodDiv">
-    <a ng-click="updateMood('smile')" ng-class="{selectedMood : moodSelected('smile')}"><i class="fa fa-smile-o"></i></a>
-    <a ng-click="updateMood('meh')" ng-class="{selectedMood : moodSelected('meh')}"><i class="fa fa-meh-o"></i></a>
-    <a ng-click="updateMood('frown')" ng-class="{selectedMood : moodSelected('frown')}"><i class="fa fa-frown-o"></i></a>
-
-    </div>
-
-    <div id="weatherDiv">
-    <a ng-click="updateWeather('sun-o')" ng-class="{selectedWeather : weatherSelected('sun-o')}"><i class="fa fa-sun-o"></i></a>
-    <a ng-click="updateWeather('cloud')" ng-class="{selectedWeather : weatherSelected('cloud')}"><i class="fa fa-cloud"></i></a>
-    <a ng-click="updateWeather('tint')" ng-class="{selectedWeather : weatherSelected('tint')}"><i class="fa fa-tint"></i></a>
-    </div>
-</div>
-
-<div class="postingDiv" ng-if="isCurrentUser">
-    <input type="text" ng-model="formData.status" placeholder="What's on your mind?" class="comment">
-    <button ng-click="updateStatus()">Update Status</button>
-</div>
-
-
-<!-- News feed -->
-<div class="feed">
-<div ng-repeat="post in posts | filter:postFilter | orderBy: '-time'">
-    <img ng-src="{{post.image}}">
-    <span class="content">{{post.content}}</span><br>
-    <span class="author">{{post.handle}}</span>
-</div>
-</div>
-
-<div ng-if="!isCurrentUser">
-    <div class="postingDiv">
-        <input type="text" ng-model="commentData.status" placeholder="Leave a comment" class="comment">
-        <button ng-click="leaveComment()">Leave Comment</button>
-    </div>
-</div>
-
-
-
-<!-- Days until they come home -->
-
+   <div class="header">
+      <img id="userPic" ng-src="{{userObj.avatar}}" ng-if="userObj.avatar != 'NA'">
+        <i class="fa fa-user" ng-if="userObj.avatar == 'NA'" id="noProfPic"></i>
+      <h2>{{userObj.handle}}</h2>
+      <i ng-if="!isCurrentUser" class="fa fa-{{userObj.mood}}-o" id="moodIcon" ></i>
+      <i ng-if="!isCurrentUser" class="fa fa-{{userObj.weather}}" id="weatherIcon"></i>
+      <ds-widget-clock gmt-offset="gmtValue" id="clock"></ds-widget-clock>
+   </div>
+   <!-- Current time -->
+   <!-- <p id="time">{{currentTime | date:"MM/dd/yyyy 'at' h:mma"}}</p> -->
+   <div ng-if="isCurrentUser" id="changeConditions">
+      <!-- Mood status div -->
+      <div id="moodDiv">
+         <a ng-click="updateMood('smile')" ng-class="{selectedMood : moodSelected('smile')}"><i class="fa fa-smile-o"></i></a>
+         <a ng-click="updateMood('meh')" ng-class="{selectedMood : moodSelected('meh')}"><i class="fa fa-meh-o"></i></a>
+         <a ng-click="updateMood('frown')" ng-class="{selectedMood : moodSelected('frown')}"><i class="fa fa-frown-o"></i></a>
+      </div>
+      <div id="weatherDiv">
+         <a ng-click="updateWeather('sun-o')" ng-class="{selectedWeather : weatherSelected('sun-o')}"><i class="fa fa-sun-o"></i></a>
+         <a ng-click="updateWeather('cloud')" ng-class="{selectedWeather : weatherSelected('cloud')}"><i class="fa fa-cloud"></i></a>
+         <a ng-click="updateWeather('tint')" ng-class="{selectedWeather : weatherSelected('tint')}"><i class="fa fa-tint"></i></a>
+      </div>
+   </div>
+   <!-- News feed -->
+   <div class="feed">
+      <div ng-repeat="post in posts | filter:postFilter | orderBy: '-time'">
+         <img ng-src="{{post.image}}">
+         <span class="content">{{post.content}}</span><br>
+         <span class="author">{{post.handle}}</span>
+      </div>
+   </div>
+      <div class="postingDiv" ng-if="!isCurrentUser">
+         <input type="text" ng-model="commentData.status" placeholder="Leave a comment" class="comment">
+         <button ng-click="leaveComment()">Leave Comment</button>
+      </div>
+    <div class="postingDiv" ng-if="isCurrentUser">
+      <input type="text" ng-model="formData.status" placeholder="What's on your mind?" class="comment">
+      <button ng-click="updateStatus()">Update Status</button>
+   </div>
+   <!-- Days until they come home -->
 </div>

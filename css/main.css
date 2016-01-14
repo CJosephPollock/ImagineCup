@@ -3,7 +3,6 @@ body {
 	background-color: #f2e4c9;
 }
 
-
 /* LOGIN PAGE */
 #splashScreen {
 	width: 100%;
@@ -25,12 +24,14 @@ body {
 
 #signupForm input {
 	width: 80vw;
+	max-width: 500px;
 	height: 5vh;
 	border: 3px solid black;
 	font-size: 1.5em;
 	border-radius: 11px;
 	text-align: center;
 }
+
 .form-group {
 	margin: 10px;
 }
@@ -60,9 +61,6 @@ button {
 
 /* HOME PAGE */
 
-
-
-
 #homeScreen {
 	text-align: center;
 }
@@ -82,7 +80,6 @@ button {
 
 #homeScreen hr {
 	width: 100%;
-
     display: block;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -92,6 +89,12 @@ button {
     border-width: 3px;
 
 }
+#connectionLabel {
+	display: block;
+	margin-bottom: 30px;
+}
+
+
 
 .connections {
 	border-bottom: 2px solid blue;
@@ -112,10 +115,15 @@ button {
 }
 
 .connections i {
-	position: absolute;
-	right: 10px;
+	font-size: 5em;
 	margin-top: 10px;
-	font-size: 9em;
+}
+.moodIcons {
+	float: right;
+}
+
+.noAvatar {
+	float: left;
 }
 
 #homeFunctionDiv {
@@ -144,12 +152,16 @@ button {
 
 #profileDiv {
 	width: 100%;
+	height: 100%;
 }
 
 .fp__btn {
-	position: absolute;
+	position: fixed;
 	left: 30px;
-	top: 10px;
+	bottom: 10px;
+	z-index: 9999;
+	font-size: 30px !important;
+	height: 50px !important;
 }
 
 .header {
@@ -183,7 +195,16 @@ button {
 }
 
 #userPic {
-	max-height: 22vh;
+	max-height: 20vh;
+}
+
+#noProfPic {
+	position: absolute;
+	top: 50px;
+	left: 50px;
+	font-size: 10vh;
+	padding: 30px;
+	border: 3px solid steelblue;
 }
 
 
@@ -195,11 +216,14 @@ button {
 }
 
 .postingDiv {
+	text-align: center;
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	bottom: 0px !important;
 	left: 0px;
-	min-height: 60px;
+	height: 68px;
+	background-color: #debb77;
+	border-top: 3px solid #d4a64e;
 }
 
 .postingDiv button {
@@ -209,15 +233,14 @@ button {
 
 .postingDiv input {
 	float: center;
-	width: 50%;
+	width: 40%;
 	height: 50px;
-	font-size: 3em;
+	font-size: 2.5em;
 }
 
 .feed {
 	width: 100%;
 	margin-top: 35vh;
-	height: 65vh;
 }
 
 .feed div {
@@ -226,12 +249,20 @@ button {
 	border-top: 2px solid black; 
 }
 
+.feed div:last-child {
+	margin-bottom: 6vh;
+}
+
 .feed .content {
 	font-size: 4em;
 }
 
+.feed img {
+	max-width: 200px;
+	margin-top: 10px;
+}
+
 .feed .author {
-	float: left;
 	font-size: 1.5em;
 }
 
@@ -287,26 +318,9 @@ button {
 	margin-top: 15px;
 }
 
-#homeConnectionDiv {
-	width: 100%;
-	position: absolute;
-	top: 40vh;
-	left: 0;
-	text-align: center;
-}
 
 #filePicker {
 	position: absolute !important;
 	left: 300px !important;
 	z-index: 99999 !important;
 }
-
-/* MEDIA QUERIES */
-@media screen and (min-width:768px) {
-
-}
-
-
-
-
-*/

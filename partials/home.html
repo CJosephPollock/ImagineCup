@@ -1,27 +1,28 @@
 <div id="homeScreen">
 <h1>Welcome!</h1>
-
 <img id="profilePic" ng-src="{{users[userId].avatar}}" ui-sref="profile({currentUser: true, handle: userId})"></img>
 <!-- <span>{{users[userId].handle}}</span>
- -->
-<div id="homeFunctionDiv">
-<button ui-sref="addNewConnection" id="newConnectionButton">Add New Connection</button>
-<button type="button" ng-click="logOut()" id="logOutButton">Log out</button>
-</div>
-
-
+   -->
 <h2 id="connectionLabel">Want to know more about...</h2>
 <hr>
-	<div id="homeConnectionDiv">
-		<div class="connections" ng-repeat="connection in connections | filter: connectionFilter">
-		    <img ng-if="(users[connection.user1].avatar) != 'NA' && !user1" ng-src="{{users[connection.user1].avatar}}">
-		    <img ng-if="(users[connection.user2].avatar) != 'NA' && user1" ng-src="{{users[connection.user2].avatar}}">
-			<i class="fa fa-user" ng-if="(users[connection.user1].avatar) == 'NA'"></i>
+<div id="homeConnectionDiv">
+   <div class="connections" ng-repeat="connection in connections | filter: connectionFilter">
+      <div ng-if-"user1" ui-sref="profile({currentUser: false, handle: connection.user2})">
+      	 <i class="fa fa-user noAvatar" ng-if="(users[connection.user2].avatar) == 'NA'"></i>
+         <img ng-if="(users[connection.user2].avatar) != 'NA' && user1" ng-src="{{users[connection.user2].avatar}}">
+         <span ng-if="user1" >{{users[connection.user2].handle}}</span>
+         <i ng-if="user1" class="fa fa-{{users[connection.user2].mood}}-o moodIcons"></i>
+      </div>
+      <div ng-if="!user1" ui-sref="profile({currentUser: false, handle: connection.user1})">
+      	  <i class="fa fa-user noAvatar" ng-if="(users[connection.user1].avatar) == 'NA'"></i>
+         <img ng-if="(users[connection.user1].avatar) != 'NA' && !user1" ng-src="{{users[connection.user1].avatar}}">
+         <span ng-if="!user1">{{users[connection.user1].handle}}</span>
+         <i ng-if="!user1" class="fa fa-{{users[connection.user1].mood}}-o moodIcons"></i>
+      </div>
+   </div>
+</div>
 
-			<span ng-if="!user1" ui-sref="profile({currentUser: false, handle: connection.user1})">{{users[connection.user1].handle}}</span>
-			<span ng-if="user1" ui-sref="profile({currentUser: false, handle: connection.user2})">{{users[connection.user2].handle}}</span>
-		    <i ng-if="!user1" class="fa fa-{{users[connection.user1].mood}}-o"></i>
-		    <i ng-if="user1" class="fa fa-{{users[connection.user2].mood}}-o"></i>
-		</div>
-	</div>
+<div id="homeFunctionDiv">
+   <button ui-sref="addNewConnection" id="newConnectionButton">Add New Connection</button>
+   <button type="button" ng-click="logOut()" id="logOutButton">Log out</button>
 </div>
