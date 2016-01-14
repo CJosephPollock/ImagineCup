@@ -1,7 +1,7 @@
 <div id="profileDiv">
    <div class="header">
-      <img id="userPic" ng-src="{{userObj.avatar}}" ng-if="userObj.avatar != 'NA'">
-        <i class="fa fa-user" ng-if="userObj.avatar == 'NA'" id="noProfPic"></i>
+      <img id="userPic" ng-src="{{userObj.avatar}}" ng-if="userObj.avatar != 'NA'" ui-sref="home">
+        <i class="fa fa-user" ng-if="userObj.avatar == 'NA'" id="noProfPic" ui-sref="home"></i>
       <h2>{{userObj.handle}}</h2>
       <i ng-if="!isCurrentUser" class="fa fa-{{userObj.mood}}-o" id="moodIcon" ></i>
       <i ng-if="!isCurrentUser" class="fa fa-{{userObj.weather}}" id="weatherIcon"></i>
