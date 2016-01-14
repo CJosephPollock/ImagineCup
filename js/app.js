@@ -161,6 +161,14 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
             })
     };
 
+    $scope.autoRedirect = function() {
+        var authData = Auth.$getAuth(); //get if we're authorized
+        if (authData) {
+            $scope.userId = authData.uid;
+            $location.path('/');
+        }
+    }
+
     //Make LogOut function available to views
     $scope.logOut = function() {
         Auth.$unauth(); //"unauthorize" to log out
@@ -189,6 +197,7 @@ angular.module('HomeAbroad', ['firebase', 'ui.router', 'ui.bootstrap', 'ds.clock
 
     //separate signIn function.  
     $scope.signUpsignIn = function() {
+        console.log("signing user in for the first time");
         var promise = Auth.$authWithPassword({
             'email': $scope.userObj.email,
             'password': $scope.userObj.password
