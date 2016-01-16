@@ -206,9 +206,10 @@ button {
 .header .username {
 	position: absolute;
 	left: 50px;
-	top: 24vh;
+	top: 27vh;
 	font-size: 5em;
 }
+
 
 #weatherIcon {
 	top: 7vh;
