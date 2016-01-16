@@ -3,6 +3,33 @@ body {
 	background-color: #f2e4c9;
 }
 
+nav {
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 9999;
+	background-color: #111;
+	color: white;
+	text-align: center;
+	font-size: 40px;
+	margin-bottom: 200px;
+}
+
+nav h1 {
+	margin: 0px;
+	padding: 0px;
+	margin-top: 10px;
+}
+
+nav .fa {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	font-size: 70px;
+}
+
 /* LOGIN PAGE */
 #splashScreen {
 	width: 100%;
@@ -72,11 +99,9 @@ button {
 .profilePic {
 	max-height: 50vh;
 	max-width: 50vw;
-	display: block;
-	margin: auto;
 	border-radius: 50%;
 	border: 5px solid green;
-	font-size: 10em;
+	margin-top: 40px;
 }
 
 #homeScreen hr {
@@ -178,30 +203,38 @@ button {
 	vertical-align: right;
 }
 
+.header .username {
+	position: absolute;
+	left: 50px;
+	top: 24vh;
+	font-size: 5em;
+}
+
 #weatherIcon {
-	top: 10px;
+	top: 7vh;
 	font-size: 10em;
 }
 
 #moodIcon {
-	top: 200px;
+	top: 20vh;
 	font-size: 12em;
 }
 
 .widget-clock {
 	width: 30% !important;
 	position: absolute;
-	top: 20px;
+	top: 8vh;
 	right: 20px;
 }
 
 #userPic {
 	max-height: 20vh;
+	margin-top: 7vh;
 }
 
 #noProfPic {
 	position: absolute;
-	top: 50px;
+	top: 7vh;
 	left: 50px;
 	font-size: 10vh;
 	padding: 30px;
@@ -244,7 +277,7 @@ button {
 
 .feed {
 	width: 100%;
-	margin-top: 35vh;
+	margin-top: 40vh;
 }
 
 .feed div {
@@ -274,7 +307,7 @@ button {
 	width: 100%;
 	position: absolute;
 	left: 0px;
-	top: 22vh;
+	top: 30vh;
 }
 
 #changeConditions i {
