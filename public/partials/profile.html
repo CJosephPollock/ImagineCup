@@ -1,8 +1,8 @@
 <div id="profileDiv">
    <div class="header">
-      <img id="userPic" ng-src="{{userObj.avatar}}" ng-if="userObj.avatar != 'NA'" ui-sref="home">
-        <i class="fa fa-user" ng-if="userObj.avatar == 'NA'" id="noProfPic" ui-sref="home"></i>
-      <h2>{{userObj.handle}}</h2>
+      <h2 ui-sref="home"><< Home</h2>
+      <img id="userPic" ng-src="{{userObj.avatar}}" ng-if="userObj.avatar != 'NA'">
+        <i class="fa fa-user" ng-if="userObj.avatar == 'NA'" id="noProfPic"></i>
       <i ng-if="!isCurrentUser" class="fa fa-{{userObj.mood}}-o" id="moodIcon" ></i>
       <i ng-if="!isCurrentUser" class="fa fa-{{userObj.weather}}" id="weatherIcon"></i>
       <ds-widget-clock gmt-offset="gmtValue" id="clock"></ds-widget-clock>
